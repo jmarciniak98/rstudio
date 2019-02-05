@@ -1,0 +1,170 @@
+---
+title: "W4-5 Data Frame Exercise"
+author: "Josh Marciniak"
+date: "February 4, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 5 Exercise
+### 5.1 E1
+The following R code will create a data frame of 5 rows and 5 named columns and store it in the name weather:
+```{r}
+weather <- data.frame(
+  outlook = c("sunny", "sunny","overcast"),
+  temp = c(85, 80, 83),
+  humidity = c(85, 90, 86),
+  windy = c(FALSE, TRUE, FALSE),
+  play = c("no", "no", "yes")
+)
+```
+To check the weather data frame, we will print it by typing "weather"" into the r console:
+```{r}
+weather 
+```
+### 5.2 E2
+#Importing iris dataset
+To use the iris dataset it must be imported into R:
+```{r}
+iris
+```
+##5.2.1 Opening the help file of a built-in dataset
+To open the help document of the iris dataset, use the help command:
+```{r}
+help(iris)
+```
+##5.2.2 Examining the object type
+To return the data type of the iris dataset, use the class function:
+```{r}
+class(iris)
+```
+Using the class function on the dataset iris returns that this dataset is a data frame.
+##5.2.3 Retrieving a column from a dataframe
+The $ is used to reference a named column in the iris dataframe.  The following code shows how to retrieve the column Petal.Length from the iris dataset:
+```{r}
+iris$Petal.Length
+```
+##5.2.4 Finding data type of a column (attribute)
+Finding the the data type of a specific column in the iris data set is done by using the function class. The following code shows how to find the data type of the Sepal.Length column in the iris dataset:
+```{r}
+class(iris$Sepal.Length)
+```
+##5.2.5 Subscripting
+Filtering rows in R is important in certain situations. The following code shows how to return only the first 50 rows of the iris dataset:
+```{r}
+iris[1:50,]
+```
+Next, we will return the first 2 columns in the iris dataset:
+```{r}
+iris[,1:2]
+```
+Next, we will return only the columns Sepal.Length and Petal.Length:
+```{r}
+iris[, c("Sepal.Length", "Petal.Length")]
+```
+Next, we will return all of the columns, except the last column:
+```{r}
+iris[, 1:4]
+```
+Finally, we will return only the rows whose species is equal to setosa:
+```{r}
+iris[,iris$species == "setosa"]
+```
+##5.2.6 Displaying column-wise statistics data
+The summary function in R is used to produce result summaries of the results of various model fitting functions.  The following code returns the summary of iris:
+```{r}
+summary(iris)
+```
+The summary function used on iris returns the min, 1st quartile, median, mean, 3rd quartile and max. The min is just the lowest value in the dataset. The 1st quartile is the median of the lower half of the dataset.  This means that 25% of the numbers in the data set lie below this value. The median is the middle value in the data set. The mean is the sum of all the values in the data set. Finally, the 3rd quartile is the median of the upper half of the data set. This means that 75% of the numbers in the data set lie below this value.
+### 5.3 E3
+This sections asks to run the following code and determine what result1 and result2 contain:
+```{r}
+df <- data.frame(X = -2:2, Y = 1:5)
+result1 <- df$Y[df$X >0]
+result2 <- df[df$X>0,]
+```
+result1 will return all of the values from column Y where the matching X value is greater than 0. 
+```{r}
+result1
+```
+result2 will return all of the rows in df where X is greater than 0.
+```{r}
+result2
+```
+### 5.4 E4
+## Importing mtcars dataset
+```{r}
+mtcars
+help(mtcars)
+```
+## Subscripting mtcars dataset
+First,we will return only the first five rows of the mtcars dataset:
+```{r}
+mtcars[1:5,]
+```
+Next, we will return only the last 5 rows:
+```{r}
+mtcars[28:32,]
+```
+The mtcars dataset has 32 rows and 11 columns:
+```{r}
+nrow(mtcars)
+ncol(mtcars)
+```
+Next, we will return the mpg column of the mtcars dataset:
+```{r}
+mtcars$mpg
+```
+Next, we will return the mpg column where the corresponding cyl column is 6:
+```{r}
+mtcars$mpg[mtcars$cyl == 6]
+```
+Next, we will return all rows of the mtcars dataset where cyl is 6:
+```{r}
+mtcars[mtcars$cyl == 6,]
+```
+Finally, we will return all of rows of the mtcars dataset where mpg is greater than 25 (only mpg and cyl columns):
+```{r}
+mtcars[mtcars$mpg > 25, c("mpg", "cyl")]
+```
+### 5.5 E5
+## Importing diamonds data
+```{r}
+library(ggplot2)
+diamonds
+help(diamonds)
+```
+First, we will return the first five rows of the diamonds dataset:
+```{r}
+diamonds[1:5,]
+```
+Next, we will find the row and column count of the diamonds dataset:
+```{r}
+nrow(diamonds)
+ncol(diamonds)
+```
+The diamonds dataset has 53940 rows and 10 columns.
+Next, we will select all of the rows in the diamonds dataset that have a cut of "Very Good".  Then we will find the number of rows of this subset:
+```{r}
+verygood <- diamonds[diamonds$cut == "Very Good",]
+verygood
+nrow(verygood)
+```
+There are 12082 rows that have the "Very Good" cut.
+Now, we will return the number of diamonds whos carat is greater than 3.0:
+```{r}
+nrow(diamonds[diamonds$carat > 3.0,])
+```
+There are 32 diamonds with whose carat is greater than 3.0.
+Next, we will return the rows where the color is D (color and cut columns only):
+```{r}
+diamonds[diamonds$color == "D", c("color", "cut")]
+```
+Finally, we will run the summary command with the diamonds data and find the average price:
+```{r}
+summary(diamonds)
+```
+The average price in the diamonds dataset is 3933.
