@@ -1,0 +1,133 @@
+---
+title: "Week6_Data_Manipulation"
+author: "Josh Marciniak"
+date: "February 13, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### 8.1 E1
+## Importing the tidyverse and converting mtcars into a tibble
+```{r}
+library(tidyverse)
+mtcars %>% data.frame 
+```
+# Rewriting mtcars[1:5, ] using dplyr and pipes returns all the columns of the first 5 rows of mtcars
+```{r}
+mtcars %>%
+  as_tibble %>%
+  slice(1:5)
+```
+#Displaying last 5 rows of mtcars
+```{r}
+mtcars%>%
+  as_tibble%>%
+  tail(5)
+```
+#Rewriting nrow(mtcars) using dplyr and pipes returns the number of rows in mtcars
+```{r}
+mtcars %>% 
+  as_tibble%>%
+  summarise(count=n())
+```
+#Selecting only the column named mpg
+```{r}
+mtcars %>% 
+  as_tibble%>%
+  select(mpg)
+```
+#Selecting rows where cyl = 6 from column mpg
+```{r}
+mtcars %>% 
+  as_tibble%>%
+  filter(cyl==6)%>%
+  select(mpg)
+```
+#Selecting rows where cyl = 6 and all columns
+```{r}
+mtcars %>% 
+  as_tibble%>%
+  filter(cyl==6)
+```
+#Selecting rows where mpg is greater than 25 from columns mpg and cyl
+```{r}
+mtcars %>% 
+  as_tibble%>%
+  filter(mpg > 25) %>%
+  select(c(mpg,cyl))
+```
+###8.2 E2
+```{r}
+diamonds %>% data.frame
+```
+#Displaying the first 5 rows of diamonds
+```{r}
+diamonds %>%
+  as_tibble %>%
+  slice(1:5)
+```
+#Counting the number of rows in diamonds
+```{r}
+diamonds %>%
+  as_tibble %>%
+  summarise(count=n())
+```
+#Counting the number of rows in diamonds that have a cut of "very good"" and displaying all columns
+```{r}
+diamonds %>%
+  as_tibble %>%
+  filter(cut=="Very Good")%>%
+  summarise(count=n())
+```
+#Counting the number of rows in diamonds with a carat greater than 3.0
+```{r}
+diamonds %>%
+  as_tibble %>%
+  filter(carat>3.0)%>%
+  summarise(count=n())
+```
+#Displaying the rows where color = D and the columns color and cut
+```{r}
+diamonds %>%
+  as_tibble %>%
+  filter(color == "D")%>%
+  select(c(color, cut))
+```
+#Displaying the mean of the price column of diamonds
+```{r}
+diamonds %>%
+  as_tibble %>%
+  summarise(price.mean=mean(price))
+```
+
+###8.3 E3
+##Question 1
+```{r}
+mtcars%>%
+  as_tibble%>%
+  group_by(cyl) %>%
+  summarise(count=n())
+```
+##Question 2
+```{r}
+mtcars%>%
+  as_tibble%>%
+  group_by(cyl) %>%
+  summarise(mpg.mean=mean(mpg),mpg.disp=mean(disp))
+```
+##Question 3
+```{r}
+diamonds%>%
+  as_tibble%>%
+  group_by(cut)%>%
+  summarise(price.max=max(price),price.mean=mean(price),price.min=min(price))
+```
+##Question 4
+```{r}
+diamonds%>%
+  as_tibble%>%
+  group_by(color)%>%
+  summarise(price.max=max(price),price.mean=mean(price),price.min=min(price))
+```
